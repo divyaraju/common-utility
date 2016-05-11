@@ -1,0 +1,270 @@
+/**
+ * Schema definition for the Common.
+ */
+@namespace("com.cerner.pophealth.appservices.common.models")
+protocol CommonProtocol {
+
+  /**
+   * A standard code, consisting of a code ID and coding system ID.
+   */
+  record StandardCode {
+
+    /**
+     * The id of the standard code.
+     */
+    string code;
+
+    /**
+     * The id of the coding system the standard code came from.
+     */
+    string codingSystemId;
+  }
+
+  /**
+   * DEPRECATED - CodeDetail should be used instead.
+   */
+  record Code {
+
+    /**
+     * The id of the standard code.
+     */
+    string code;
+
+    /**
+     * Display text for the coding system
+     */
+    union {null, string} codeSystem = null;
+
+    /**
+     * The id of the coding system provided by the data source.
+     */
+    string codingSystemId;
+
+    /**
+     * Display text for the code; Preferred order:
+     * - Raw code display
+     * - Standard code display
+     * - coding_system_display + " " + code
+     * - code
+     */
+    union {null, string} codeSystemDisplay = null;
+
+  }
+
+  record CodeDetail {
+
+    /**
+     * The id of the standard code;
+     * if the standard code is not populated, this will be the id of the raw code.
+     */
+    string id;
+
+    /**
+     * The id of the coding system provided by the standard code;
+     * if the standard code is not populated, this will be the id of the coding system provided by the raw code.
+     */
+    string coding_system_id;
+
+    /**
+     * Display text for the code; Preferred order:
+     * - Raw code display
+     * - Standard code display
+     * - coding_system_display + " " + code
+     * - code
+     */
+    union {null, string} display = null;
+
+    /**
+     * Display text for the coding system provided by the standard code;
+     * if the standard code is not populated, this will be the display text for the coding system provided by the raw code.
+     */
+    union {null, string} coding_system_display = null;
+
+  }
+
+  /**
+   * A model containing attributes of a tele-communication, including an optional type.
+   * Typically this is a land-line or mobile phone number.
+   */
+  record Telecom {
+
+    /**
+     * Boolean value to determine if the telecom is the preferred telecom.
+     */
+    boolean preferred;
+
+    /**
+     * The number of the telecom.  No restrictions or assumptions are made about the value of this attribute.
+     * For example, "123-456-7890".  This attribute is required.
+     */
+    string number;
+
+    /**
+     * The extension portion of the telecom.  For example, "x1234".
+     */
+    union {null, string} extension = null;
+
+    /**
+     * The country code portion of the telecom.  For example, "1" represents the USA.
+     */
+    union {null, string} countryCode = null;
+
+    /**
+     * The code representing the telecom type.
+     */
+    union {null, CodeDetail} type = null;
+
+  }
+
+  /**
+     * A model containing attributes of a tele-communication.
+     * Typically this is a land-line or mobile phone number.
+     */
+    record TelecomLite {
+
+      /**
+       * Boolean value to determine if the telecom is the preferred telecom.
+       */
+      boolean preferred;
+
+      /**
+       * The number of the telecom.  No restrictions or assumptions are made about the value of this attribute.
+       * For example, "123-456-7890".  This attribute is required.
+       */
+      string number;
+
+      /**
+       * The extension portion of the telecom.  For example, "x1234".
+       */
+      union {null, string} extension = null;
+
+      /**
+       * The country code portion of the telecom.  For example, "1" represents the USA.
+       */
+      union {null, string} countryCode = null;
+
+    }
+
+  /**
+   * A model containing attributes of an email address.
+   */
+  record EmailAddress {
+
+    /**
+     * The address of the email address.  For example, "johndoe@gmail.com".  This attribute is required.
+     */
+    string address;
+
+    /**
+     * The code representing the email address type.
+     */
+    union {null, CodeDetail} type = null;
+  }
+
+  /**
+     * A model containing attributes of an email address.
+     */
+    record EmailAddressLite {
+
+      /**
+       * The address of the email address.  For example, "johndoe@gmail.com".  This attribute is required.
+       */
+      string address;
+    }
+
+  /**
+   * A model containing attributes of an address, including an optional type.
+   * At least one of the following values should be present (i.e "streetAddresses", "city", "stateOrProvince", "postalCode", "countyOrParish", "country")
+   */
+  record Address {
+
+    /**
+     * The code representing the address type.
+     */
+    union {null, CodeDetail} type = null;
+
+    /**
+     * A list of street addresses associated with the address.  Typically there are 1-3 street addresses.
+     * For example, "123 Washington Ave.".
+     */
+    array<string> streetAddresses = [];
+
+    /**
+     * The city portion of the address.  For example, "Kansas City".
+     */
+    union {null, string} city = null;
+
+    /**
+     * The state or province portion of the address.  For example, "Missouri".
+     */
+    union {null, string} stateOrProvince = null;
+
+    /**
+     * The code representing the state or province type.
+     */
+    union {null, CodeDetail} stateOrProvinceDetails = null;
+
+    /**
+     * The postal code or zip code portion of the address.  For example, "64117".
+     */
+    union {null, string} postalCode = null;
+
+    /**
+     * The county or parish portion of the address.  For example, "Clay".
+     */
+    union {null, string} countyOrParish = null;
+
+    /**
+     * The code representing the county or parish type.
+     */
+    union {null, CodeDetail} countyOrParishDetails = null;
+
+    /**
+     * The country portion of the address.  For example, "USA".
+     */
+    union {null, string} country = null;
+
+    /**
+     * The code representing the country type.
+     */
+    union {null, CodeDetail} countryDetails = null;
+  }
+
+/**
+   * A model containing attributes of an address.
+   * At least one of the following values should be present (i.e "streetAddresses", "city", "stateOrProvince", "postalCode", "countyOrParish", "country")
+   */
+  record AddressLite {
+
+    /**
+     * A list of street addresses associated with the address.  Typically there are 1-3 street addresses.
+     * For example, "123 Washington Ave.".
+     */
+    array<string> streetAddresses = [];
+
+    /**
+     * The city portion of the address.  For example, "Kansas City".
+     */
+    union {null, string} city = null;
+
+    /**
+     * The state or province portion of the address.  For example, "Missouri".
+     */
+    union {null, string} stateOrProvince = null;
+
+    /**
+     * The postal code or zip code portion of the address.  For example, "64117".
+     */
+    union {null, string} postalCode = null;
+
+    /**
+     * The county or parish portion of the address.  For example, "Clay".
+     */
+    union {null, string} countyOrParish = null;
+
+    /**
+     * The country portion of the address.  For example, "USA".
+     */
+    union {null, string} country = null;
+  }
+}

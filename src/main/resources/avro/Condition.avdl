@@ -1,0 +1,52 @@
+/**
+ * Schema definition for the Condition.
+ */
+@namespace("com.cerner.pophealth.appservices.common.models.pipeline")
+protocol ConditionProtocol {
+
+  import idl "Common.avdl";
+  import idl "Source.avdl";
+
+  /**
+   * A structure representing a condition.
+   */
+  record Condition {
+
+    /**
+     * Display value for the code; Preferred order:
+     * - Raw code display
+     * - Standard code display
+     * - coding_system_display + " " + code
+     * - code
+     */
+    union {null, string} name = null;
+
+    /**
+     * The id of the standard code. Although, this field is marked as nullable, this is currently not possible due to
+     * Synapse rules.
+     */
+    union {null, string} code = null;
+
+    /**
+     * The human readable code system value. Although, this field is marked as nullable, this is currently not
+     * possible due to Synapse rules.
+     */
+    union {null, string} codeSystem = null;
+
+    /**
+     * The id of the coding system provided by the data source. Although, this field is marked as nullable, this is
+     * currently not possible due to Synapse rules.
+     */
+    union {null, string} codingSystemId = null;
+
+    /**
+     * The clinically significant date when the Diagnosis or Condition was established, provided by the data source, in ISO 8601 format.
+     */
+    union {null, string} effectiveDate = null;
+
+    /**
+    * The information related to source
+    */
+    Source source;
+  }
+}

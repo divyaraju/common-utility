@@ -1,0 +1,22 @@
+@namespace("com.cerner.pophealth.appservices.common.models")
+
+protocol SupportingDataPointsProtocol {
+
+  /**
+   * A collection of data which contributed to a piece of program output.
+   */
+  record SupportingDataPoints {
+
+    array<Condition> conditions = [];
+
+    array<Encounter> encounters = [];
+
+    array<Claim> claims = [];
+
+    array<Result> results = [];
+
+    array<Procedure> procedures = [];
+
+    array<Medication> medications = [];
+  }
+}
